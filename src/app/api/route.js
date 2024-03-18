@@ -89,6 +89,3 @@ export async function POST(request) {
     }
 
 }
-
-export const maxDuration = 50; // 50 seconds
-export const dynamic = 'force-dynamic';
