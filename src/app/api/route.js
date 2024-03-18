@@ -71,8 +71,16 @@ async function serializeResponse(answer,temperature=0) {
 
 
 export async function POST(request) {
-    const { prompt } = await request.json()
-    const answer = await askGPT3(prompt)
-    const formatAnswer = await serializeResponse(answer)
-    return Response.json({ answer, formatAnswer })
+    try {
+        console.log('1',request)
+        const { prompt } = await request.json()
+        const answer = await askGPT3(prompt)
+        console.log('2',answer)
+        const formatAnswer = await serializeResponse(answer)
+        return Response.json({ answer, formatAnswer }) 
+    } catch (error) {
+        console.error(error)
+        return Response.json({ error: error.message }, { status: 500 }) 
+    }
+
 }
