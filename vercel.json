@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/.*",
+        "dest": "/index.js",
+        "methods": ["GET", "POST"],
+        "headers": { "Cache-Control": "s-maxage=2592000" },
+        "config": {
+          "api": {
+            "timeout": 300 
+          }
+        }
+      }
+    ]
+  }
+  
