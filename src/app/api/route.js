@@ -8,11 +8,13 @@ const openai = new OpenAI({
 
 
 async function askGPT3(prompt,temperature=0) {
+    console.log('1.3',prompt)
     const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo-0125",
         messages: [{ role: 'user', content: prompt }],
         temperature,
     });
+    console.log('1.4',response.choices[0].message.content)
     return response.choices[0].message.content;
 }
 // 序列化返回的数据
@@ -72,14 +74,16 @@ async function serializeResponse(answer,temperature=0) {
 
 export async function POST(request) {
     try {
-        console.log('1',request)
-        const { prompt } = await request.json()
-        const answer = await askGPT3(prompt)
+        console.log('1','请求开始')
+        const { prompt,temperature } = await request.json()
+        console.log('1.1',prompt)
+        console.log('1.2',process.env.OPENAI_API_BASE_URL)
+        const answer = await askGPT3(prompt,temperature)
         console.log('2',answer)
-        const formatAnswer = await serializeResponse(answer)
+        const formatAnswer = await serializeResponse(answer,temperature)
         return Response.json({ answer, formatAnswer }) 
     } catch (error) {
-        console.error(error)
+        console.error('报错',error)
         return Response.json({ error: error.message }, { status: 500 }) 
     }
 
