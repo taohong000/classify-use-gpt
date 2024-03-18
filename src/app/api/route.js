@@ -81,6 +81,7 @@ export async function POST(request) {
         const answer = await askGPT3(prompt,temperature)
         console.log('2',answer)
         const formatAnswer = await serializeResponse(answer,temperature)
+        console.log('3',formatAnswer)
         return Response.json({ answer, formatAnswer }) 
     } catch (error) {
         console.error('报错',error)
@@ -88,3 +89,6 @@ export async function POST(request) {
     }
 
 }
+
+export const maxDuration = 50; // 50 seconds
+export const dynamic = 'force-dynamic';
